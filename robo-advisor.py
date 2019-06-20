@@ -20,9 +20,15 @@ response=requests.get(request_url)
 parsed_response = json.loads(response.text) #convert str to dic
 
 #breakpoint ()
+tsd = parsed_response["Time Series (Daily)"]
+
+dates=list(tsd.keys()) #Convert doctionary to List
+latest_day = dates [0] #Pulls latest date b/c ordered from most current to oldest
+
 
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
-latest_close = parsed_response["Time Series (Daily)"]["2019-06-19"]["4. close"]
+latest_close = parsed_response["Time Series (Daily)"][latest_day]["4. close"]
+
 
 def to_usd (my_price):
     return "${0:0.2f}".format(my_price)
