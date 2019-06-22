@@ -11,6 +11,7 @@ import csv
 
 #load_dotenv() #> loads contents of the .env file into the script's environment
 
+#gets data from alphaadvantage
 API_KEY = os.environ.get("9437TKPHKRA9TX6O") #Remove API Key later
 
 request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo"
@@ -23,7 +24,7 @@ response=requests.get(request_url)
 parsed_response = json.loads(response.text) #convert str to dic
 
 #breakpoint ()
-tsd = parsed_response["Time Series (Daily)"]
+tsd = parsed_response["Time Series (Daily)"] #save dictionary as a simple variable
 
 dates=list(tsd.keys()) #Convert doctionary to List
 latest_day = dates [0] #Pulls latest date b/c ordered from most current to oldest
@@ -32,7 +33,9 @@ latest_day = dates [0] #Pulls latest date b/c ordered from most current to oldes
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 latest_close = parsed_response["Time Series (Daily)"][latest_day]["4. close"]
 
-high_prices = []
+high_prices = [] #empty list
+
+#from list get recent highs and recent lows
 
 for date in dates:
     high_price = tsd[date]["2. high"]
@@ -49,12 +52,11 @@ for date in dates:
 
 recent_low = min(low_prices)
 
+#input time
 #formatted_time_now = time_now.strftime("%Y-%m-%d %H:%M:%S") #> '2019-03-03 14:45:27'
 
 #Convert to CSV
-
-#csv_file_path = "data/prices.csv" # a relative filepath
-
+breakpoint() #remove after getting keys
 csv_file_path = os.path.join(os.path.dirname(__file__), "..", "Data", "monthly_sales.csv")
 
 csv_headers = ["timestamp", "open", "low", "close", "volume"]
@@ -62,7 +64,7 @@ with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writin
     writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
     writer.writeheader() # uses fieldnames set above
     for date in dates:
-        writer.writerow({
+        writer.writerow ({
             "timestamp":date,
             "open":daily_prices ["1. open"],
             "high":daily_prices["2. high"],
@@ -71,10 +73,17 @@ with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writin
             "volume": daily_prices["5. volume"]
         })
     
-
+#format to USD
 def to_usd (my_price):
     return "${0:0.2f}".format(my_price)
 
+#Calculation
+
+
+
+#Recommendation
+
+#output
 print("-------------------------")
 print("SELECTED SYMBOL: XYZ")
 print("-------------------------")
