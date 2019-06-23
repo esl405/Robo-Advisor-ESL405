@@ -28,11 +28,11 @@ From inside the virtual environment, install package dependencies:
 pip install -r requirements.txt
 ```
 or 
-
+```sh
 pip install requests
 pip install panadas
 pip install datetime
-
+```
 ## Setup
 
 Before using or developing this application, take a moment to [obtain an AlphaVantage API Key](https://www.alphavantage.co/support/#api-key) (e.g. "abc123").
@@ -41,9 +41,7 @@ After obtaining an API Key, create a new file in this repository called ".env", 
 
     ALPHAVANTAGE_API_KEY="abc123"
 
-and add your APi key to line 10 as such:
-
-API_KEY = os.environ.get("YOUR API KEY")
+Recplace "abc123" with your API advantage key
 
 ## Usage
 
