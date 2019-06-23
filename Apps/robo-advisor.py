@@ -7,7 +7,7 @@ import pandas
 import csv
 
 #gets data from alphaadvantage
-API_KEY = os.environ.get("9437TKPHKRA9TX6O") #Remove API Key later
+API_KEY = os.environ.get("9437TKPHKRA9TX6O") #Add your API key
 
 user_choice=input ("Please input a ticker symbol: ")
 
