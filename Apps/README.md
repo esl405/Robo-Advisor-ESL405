@@ -41,7 +41,7 @@ After obtaining an API Key, create a new file in this repository called ".env", 
 
     ALPHAVANTAGE_API_KEY="abc123"
 
-Recplace "abc123" with your API advantage key
+Replace "abc123" with your API advantage key
 
 ## Usage
 
@@ -50,5 +50,7 @@ Run the recommendation script:
 ```py
 python app/robo_advisor-ESL405.py
 ```
+## Recommendation
+The recommendation is based on the thought process of momentum. If the stock is near 52 week highs or at least 85% of the high, the recommendation will be a "buy". Otherwise, the recommendation will be "sell".
 
 ## [License](/LICENSE.md)
