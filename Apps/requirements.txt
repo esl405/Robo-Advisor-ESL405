@@ -1,5 +1,8 @@
 #Requirements
-
-requests
 python-dotenv
+requests
+pandas
+requests
+datetime
+ta
 

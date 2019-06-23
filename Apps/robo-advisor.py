@@ -6,7 +6,6 @@ import datetime
 import pandas
 import csv
 
-
 #gets data from alphaadvantage
 API_KEY = os.environ.get("9437TKPHKRA9TX6O") #Remove API Key later
 
@@ -23,15 +22,13 @@ except Exception:
     response=requests.get(request_url) #Save data into variable
     parsed_response = json.loads(response.text) #convert str to dic
     tsd = parsed_response["Time Series (Daily)"] #save dictionary as a simple variable
-#response=requests.get(request_url)
+
 #print(type(response)) 
 #print(response.status_code)
 #print(response.text)
 
-#parsed_response = json.loads(response.text) #convert str to dic
-
 #breakpoint ()
-#tsd = parsed_response["Time Series (Daily)"] #save dictionary as a simple variable
+
 
 dates=list(tsd.keys()) #Convert doctionary to List
 latest_day = dates [0] #Pulls latest date b/c ordered from most current to oldest
@@ -85,15 +82,20 @@ with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writin
 def to_usd (my_price):
     return "${0:0.2f}".format(my_price)
 
-#Calculation
+#Recommendation Calculation (If price is below 85% of high, no momentum therefore, sell)
+latest_close_conv = float(latest_close) #convert str to float to convert to integer
 
+if int(latest_close_conv) > (int(recent_high) * 0.85):
+    recommendation = "Buy!"
+    reason = "Grow Your Winners"
+else:
+    recommendation = "Sell!"
+    reason = "Sell the Dogs"
 
-
-#Recommendation
 
 #output
 print("-------------------------")
-print("SELECTED SYMBOL: XYZ")
+print(f"SELECTED SYMBOL: {user_choice}")
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
 print(f"REQUESTED AT: {formatted_time_now}")
@@ -103,8 +105,8 @@ print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"RECENT HIGH: {to_usd(float(recent_high))}")
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("-------------------------")
-print("RECOMMENDATION: BUY!")
-print("RECOMMENDATION REASON: TODO")
+print("RECOMMENDATION: " + recommendation)
+print("RECOMMENDATION REASON: " + reason)
 print("-------------------------")
 print(f"WRITING DATA TO CSV: {csv_file_path}")
 print("-------------------------")
