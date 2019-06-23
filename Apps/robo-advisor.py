@@ -1,3 +1,4 @@
+#Robo Advisor App - Based on Walkthrough by Prof. Rossetti (https://www.youtube.com/watch?v=UXAVOP1oCog&t=847s)
 import json
 import os
 import requests
@@ -5,11 +6,6 @@ import datetime
 import pandas
 import csv
 
-#from dotenv import load_dotenv
-
-
-
-#load_dotenv() #> loads contents of the .env file into the script's environment
 
 #gets data from alphaadvantage
 API_KEY = os.environ.get("9437TKPHKRA9TX6O") #Remove API Key later
@@ -53,13 +49,14 @@ for date in dates:
 recent_low = min(low_prices)
 
 #input time
-#formatted_time_now = time_now.strftime("%Y-%m-%d %H:%M:%S") #> '2019-03-03 14:45:27'
+time_now = datetime.datetime.now() #> datetime.datetime(2019, 3, 3, 14, 44, 57, 139564)
+formatted_time_now = time_now.strftime("%Y-%m-%d %H:%M:%S") #> '2019-03-03 14:45:27'
 
 #Convert to CSV
-breakpoint() #remove after getting keys
+#breakpoint() #remove after getting keys
 csv_file_path = os.path.join(os.path.dirname(__file__), "..", "Data", "monthly_sales.csv")
 
-csv_headers = ["timestamp", "open", "low", "close", "volume"]
+csv_headers = ["timestamp", "open", "low", "high", "close", "volume"]
 with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
     writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
     writer.writeheader() # uses fieldnames set above
@@ -88,7 +85,7 @@ print("-------------------------")
 print("SELECTED SYMBOL: XYZ")
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
-#print(f"REQUESTED AT: {formatted_time_now}")
+print(f"REQUESTED AT: {formatted_time_now}")
 print("-------------------------")
 print(f"LATEST DAY: {last_refreshed}")
 print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
