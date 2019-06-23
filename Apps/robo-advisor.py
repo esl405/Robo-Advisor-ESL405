@@ -10,17 +10,28 @@ import csv
 #gets data from alphaadvantage
 API_KEY = os.environ.get("9437TKPHKRA9TX6O") #Remove API Key later
 
-request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo"
+user_choice=input ("Please input a ticker symbol: ")
 
-response=requests.get(request_url)
+try:
+    request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={user_choice}&apikey={API_KEY}" #Convert from demo to input
+    response=requests.get(request_url) #Save data into variable
+    parsed_response = json.loads(response.text) #convert str to dic
+    tsd = parsed_response["Time Series (Daily)"] #save dictionary as a simple variable
+except Exception:
+    user_choice = input("Please check the ticker and re-enter: ") 
+    request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={user_choice}&apikey={API_KEY}" #Convert from demo to input
+    response=requests.get(request_url) #Save data into variable
+    parsed_response = json.loads(response.text) #convert str to dic
+    tsd = parsed_response["Time Series (Daily)"] #save dictionary as a simple variable
+#response=requests.get(request_url)
 #print(type(response)) 
 #print(response.status_code)
 #print(response.text)
 
-parsed_response = json.loads(response.text) #convert str to dic
+#parsed_response = json.loads(response.text) #convert str to dic
 
 #breakpoint ()
-tsd = parsed_response["Time Series (Daily)"] #save dictionary as a simple variable
+#tsd = parsed_response["Time Series (Daily)"] #save dictionary as a simple variable
 
 dates=list(tsd.keys()) #Convert doctionary to List
 latest_day = dates [0] #Pulls latest date b/c ordered from most current to oldest
